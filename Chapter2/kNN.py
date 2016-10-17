@@ -7,19 +7,19 @@ Input:      inX: vector to compare to existing dataset (1xN)
             k: number of neighbors to use for comparison (should be an odd number)
             
 Output:     the most popular class label
-@author: pbharrin
+@author: poemafar
 '''
-from numpy import *
-import operator
+from numpy import *     #科学计算包NumPy
+import operator         #运算符模块
 from os import listdir
 
 def classify0(inX, dataSet, labels, k):
-    dataSetSize = dataSet.shape[0]
-    diffMat = tile(inX, (dataSetSize,1)) - dataSet
-    sqDiffMat = diffMat**2
-    sqDistances = sqDiffMat.sum(axis=1)
+    dataSetSize = dataSet.shape[0]      #矩阵一维长度（行数），样本集的个数
+    diffMat = tile(inX, (dataSetSize,1)) - dataSet      #tile重复某个数组，行y列x
+    sqDiffMat = diffMat**2              #平方
+    sqDistances = sqDiffMat.sum(axis=1) #行向量相加
     distances = sqDistances**0.5
-    sortedDistIndicies = distances.argsort()     
+    sortedDistIndicies = distances.argsort()     #升序排序
     classCount={}          
     for i in range(k):
         voteIlabel = labels[sortedDistIndicies[i]]
